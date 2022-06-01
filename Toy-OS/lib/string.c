@@ -1,4 +1,5 @@
 #include "string.h"
+#include "sbi.h"
 
 void *memset(void *dst, int c, uint64 n) {
     char *cdst = (char *)dst;
@@ -6,4 +7,12 @@ void *memset(void *dst, int c, uint64 n) {
         cdst[i] = c;
 
     return dst;
+}
+int getc(void)
+{
+	struct sbiret ret;
+
+	ret = sbi_ecall(SBI_GETCHAR, 0, 0, 0, 0, 0, 0, 0);
+
+	return ret.error;
 }

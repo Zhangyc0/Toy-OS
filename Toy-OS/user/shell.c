@@ -103,7 +103,7 @@ int main() {
     return 0;
 }
 */
-
+/*
 int main() {
   int pid;
   pid = fork();
@@ -117,14 +117,14 @@ int main() {
       for (unsigned int i = 0; i < 0x4FFFFFFF; i++);
   }
 }
+*/
 
-/*
 int main(void) {
-	static char buf[100];
+	char buf[100];
 	int fd;
 	
 	while(getcmd(buf,sizeof(buf)) >= 0) {
-        printf("%s\n", buf);
+        //printf("%s\n", buf);
 		if (strcmp(buf, "hello") == 0) {
 			int pid = fork();
 			printf("Get pid %d\n", pid);
@@ -142,4 +142,3 @@ int main(void) {
 	}
 	exit(0);
 }
-*/

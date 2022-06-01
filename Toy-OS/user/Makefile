@@ -14,7 +14,6 @@ uapp.o: uapp.S uapp.bin
 
 %.o:%.S
 	${GCC} ${CFLAG}  -c $<
-
 uapp.bin: $(OBJ)
 	${GCC} ${CFLAG} -fpie -T link.lds -o uapp.elf ${OBJ}
 	${OBJCOPY} uapp.elf -O binary uapp.bin

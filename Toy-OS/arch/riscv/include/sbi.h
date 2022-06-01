@@ -2,7 +2,7 @@
 #define _SBI_H
 
 #define SBI_PUTCHAR 0x1
-
+#define SBI_GETCHAR 0x2
 #include "types.h"
 
 struct sbiret {

@@ -1,5 +1,6 @@
 #include "syscall.h"
 #include "string.h"
+#include "stdio.h"
 
 static inline long read(int fd, void* buf, int nbuf)
 {
@@ -23,23 +24,30 @@ char *gets(char *buf, int max) {
 
     for (i = 0; i + 1 < max;) {
         cc = read(0, &c, 1);
+        //printf("cc=%d\n",cc);
+        //printf("c=%c\n",c);
+        //printf("c=%d\n",c);
         if (cc == 0)
             continue;
         if (cc < 1)
             break;
         buf[i++] = c;
+        //printf("%c",buf[i-1]);
+        //printf("buf[%d]=%c\n",i-1,buf[i-1]);
         if (c == '\n' || c == '\r')
             break;
+        else printf("%c",buf[i-1]);
     }
     buf[i - 1] = '\0';
+    printf("\n");
     return buf;
 }
 
 void *memset(void *dst, int c, unsigned int n) {
     char *cdst = (char *)dst;
-    int i;
+    unsigned int i;
     for (i = 0; i < n; i++) {
-        cdst[i] = c;
+        cdst[i] = (char)c;
     }
     return dst;
 }

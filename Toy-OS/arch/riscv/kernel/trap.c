@@ -142,6 +142,18 @@ void sys_exit() {
      schedule to give up cpu;
 	 */
 }
+int sys_read(struct pt_regs *regs){
+    char* buf = regs->a1;
+    int nbuf = regs->a2;
+    int i;
+    char c;
+    for(i=0;i<nbuf;){
+        c=getc();
+        if(c!=0xFF) buf[i++]=c;
+    }
+    return i;
+    
+}
 void trap_handler(unsigned long scause, unsigned long sepc, struct pt_regs *regs) {
     current->trapframe=regs;
     unsigned long temp = scause >> 63;
@@ -160,19 +172,22 @@ void trap_handler(unsigned long scause, unsigned long sepc, struct pt_regs *regs
         temp = scause & 0x7fffffffffffffff;
         if(temp == 8)//Environment call from U-mode
         {
-            if(regs->a7==SYS_GETPID)
+            if(regs->a7==SYS_GETPID)//172
             {
                 regs->sepc+=4;
                 regs->a0=current->pid;
-            }else if(regs->a7==SYS_WRITE)
+            }else if(regs->a7==SYS_WRITE)//64
             {
                 char* buffer=(char*)(regs->a1);
                 regs->a0=printk(buffer);
                 regs->sepc+=4;
-            }else if(regs->a7==SYS_CLONE){
+            }else if(regs->a7==SYS_CLONE){//220
                 regs->a0=clone(regs);
                 regs->sepc+=4;
                 //forkret();
+            }else if(regs->a7==SYS_READ){//63
+                regs->a0=sys_read(regs);
+                regs->sepc+=4;
             }
         }
         /*else if(temp == 9)//Environment call from S-mode
