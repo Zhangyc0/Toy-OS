@@ -57,7 +57,6 @@ static inline long exec(char* path)
 					);
 	return ret;
 }
-
 void runcmd(char* cmd) {
 	exec(cmd);
 	printf("exec %s failed\n", cmd);

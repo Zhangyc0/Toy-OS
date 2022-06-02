@@ -15,6 +15,10 @@
 #define VM_END   (0xffffffff00000000)
 #define VM_SIZE  (VM_END - VM_START)
 
+#define uapp_start (0x84200000)
+#define uapp_end (0x84202000)
+
+
 #define PA2VA_OFFSET (VM_START - PHY_START)//FFFFFFDF80000000
 
 #define USER_START (0x0000000000000000) // user space start virtual address

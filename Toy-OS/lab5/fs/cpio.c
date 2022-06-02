@@ -1,6 +1,5 @@
 #include "fs.h"
 #include "mm.h"
-#include "stdio.h"
 #include "defs.h"
 
 #define ALIGN4(value) (((size_t)value + 3) >> 2 << 2)

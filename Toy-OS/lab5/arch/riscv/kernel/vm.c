@@ -1,7 +1,7 @@
 // arch/riscv/kernel/vm.c
 #include "defs.h"
 #include "vm.h"
-extern uint64 _stext,_srodata,_sdata,_ekernel,uapp_start,uapp_end,_sbss;
+extern uint64 _stext,_srodata,_sdata,_ekernel,_sbss;
 /* early_pgtbl: 用于 setup_vm 进行 1GB 的 映射。 */
 unsigned long  early_pgtbl[512] __attribute__((__aligned__(0x1000)));
 
@@ -38,7 +38,7 @@ void setup_vm_final(void) {
     create_mapping(swapper_pg_dir,(uint64)(&_srodata),(uint64)(&_srodata)-PA2VA_OFFSET,(uint64)(&_sdata)-(uint64)(&_srodata),3);
     
     // mapping kernel data -|W|R|V
-    create_mapping(swapper_pg_dir,(uint64)(&_sdata),(uint64)(&_sdata)-PA2VA_OFFSET,(uint64)(&uapp_start)-(uint64)(&_sdata),7);
+    create_mapping(swapper_pg_dir,(uint64)(&_sdata),(uint64)(&_sdata)-PA2VA_OFFSET,(uint64)(uapp_start)-(uint64)(&_sdata),7);
     
     // mapping other memory -|W|R|V
     create_mapping(swapper_pg_dir,(uint64)(&_sbss),(uint64)(&_sbss)-PA2VA_OFFSET,(uint64)(VM_START+PHY_SIZE)-(uint64)(&_sbss),7);

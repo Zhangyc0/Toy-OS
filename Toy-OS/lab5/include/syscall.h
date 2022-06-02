@@ -9,3 +9,13 @@
 #define SYS_MMAP     222
 #define SYS_MPROTECT 226
 #define SYS_WAIT     260 // wait4
+
+static inline long getpid();
+
+static inline long fork();
+
+static inline long exit(int stat);
+
+static inline long wait();
+
+static inline long exec(char* path);

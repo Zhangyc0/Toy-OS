@@ -6,9 +6,7 @@
 #include"vm.h"
 #include"defs.h"
 extern struct task_struct* current;
-extern uint64 uapp_start;
 extern struct task_struct* task[NR_TASKS];
-extern uint64 uapp_start, uapp_end;
 extern uint64 swapper_pg_dir[512];
 //extern void create_mapping(uint64 *pgtbl, uint64 va, uint64 pa, uint64 sz, int perm);
 //register unsigned long page_addr __asm__("sbadaddr");
@@ -20,7 +18,7 @@ void do_page_fault(struct pt_regs *regs) {
     //printk("vma->vm_end=%u\n",vma->vm_end);
     //printk("vma->vm_flags=%u\n",vma->vm_flags);
     if(regs->scause==12){
- 	create_mapping(current->pgd,vma->vm_start,(uint64)(&uapp_start)-PA2VA_OFFSET,vma->vm_end-vma->vm_start,vma->vm_flags*2+1+16);
+ 	create_mapping(current->pgd,vma->vm_start,(uint64)(uapp_start)-PA2VA_OFFSET,vma->vm_end-vma->vm_start,vma->vm_flags*2+1+16);
     }else if(regs->scause==13||regs->scause==15){
         create_mapping(current->pgd,vma->vm_start,current->thread_info->user_sp-PGSIZE,vma->vm_end-vma->vm_start,vma->vm_flags*2+1+16);
     }
@@ -76,7 +74,7 @@ uint64 do_fork(struct pt_regs *regs) {
         child -> pgd[j]=swapper_pg_dir[j];
     }
     child -> mm=(struct mm_struct*)kalloc();
-    do_mmap(child->mm,USER_START,(uint64)(&uapp_end)-(uint64)(&uapp_start),7);
+    do_mmap(child->mm,USER_START,(uint64)(uapp_end)-(uint64)(uapp_start),7);
     do_mmap(child->mm,USER_END-PGSIZE,PGSIZE,3);
     child -> trapframe = (struct pg_regs*)kalloc();
     child -> trapframe->x0 = regs->x0;

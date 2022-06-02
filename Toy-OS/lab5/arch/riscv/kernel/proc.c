@@ -6,7 +6,6 @@ extern void __dummy();
 extern void __switch_to(struct task_struct* prev, struct task_struct* next);
 extern void create_mapping(uint64 *pgtbl, uint64 va, uint64 pa, uint64 sz, int perm);
 extern unsigned long  swapper_pg_dir[512] __attribute__((__aligned__(0x1000)));
-extern uint64 uapp_start,uapp_end;
 
 
 struct task_struct* idle;           // idle process
@@ -227,7 +226,7 @@ void task_init() {
         }
         task[i] -> mm=(struct mm_struct*)kalloc();
         //task[i] -> mm -> mmap =(struct vm_area_struct*)kalloc();
-        do_mmap(task[i]->mm,USER_START,(uint64)(&uapp_end)-(uint64)(&uapp_start),7);
+        do_mmap(task[i]->mm,USER_START,(uint64)(uapp_end)-(uint64)(uapp_start),7);
         do_mmap(task[i]->mm,USER_END-PGSIZE,PGSIZE,3);
         //struct pt_regs *trapframe
         //task[i]->trapframe=(struct pt_regs*)kalloc();

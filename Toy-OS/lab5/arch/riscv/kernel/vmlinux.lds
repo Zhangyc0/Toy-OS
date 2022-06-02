@@ -49,24 +49,8 @@ SECTIONS
 
         _edata = .;
         . = ALIGN(0x1000);
-
-        uapp_start = .;
-
-        *(.uapp .uapp*)
-        
-        uapp_end = .;
-        . = ALIGN(0x1000);
         
     } >ramv AT>ram
-
-    /* .uapp : ALIGN(0x1000){
-        uapp_start = .;
-
-        *(.uapp .uapp*)
-        
-        uapp_end = .;
-        . = ALIGN(0x1000);
-    } >ramv AT>ram */
 
     .bss : ALIGN(0x1000){
         _sbss = .;

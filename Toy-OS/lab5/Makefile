@@ -22,11 +22,11 @@ all:
 
 run: all
 	@echo Launch the qemu ......
-	@qemu-system-riscv64 -nographic -machine virt -kernel vmlinux -bios default 
+	@qemu-system-riscv64 -nographic -machine virt -kernel vmlinux -initrd simple_fs.cpio
 
 debug: all
 	@echo Launch the qemu for debug ......
-	@qemu-system-riscv64 -nographic -machine virt -kernel vmlinux -bios default -S -s
+	@qemu-system-riscv64 -nographic -machine virt -kernel vmlinux -initrd simple_fs.cpio -S -s
 
 clean:
 	${MAKE} -C user clean
